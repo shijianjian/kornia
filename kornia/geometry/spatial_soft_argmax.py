@@ -550,6 +550,7 @@ def conv_quad_interp3d(input: torch.Tensor, strict_maxima_bonus: float = 1.0, ep
     Args:
         strict_maxima_bonus (float): pixels, which are strict maxima will score (1 + strict_maxima_bonus) * value.
                                      This is needed for mimic behavior of strict NMS in classic local features
+        eps (float): parameter to control ill-conditioning for hessian matrix.
     Shape:
         - Input: :math:`(N, C, D_{in}, H_{in}, W_{in})`
         - Output: :math:`(N, C, 3, D_{out}, H_{out}, W_{out})`, :math:`(N, C, D_{out}, H_{out}, W_{out})`, where
