@@ -1,10 +1,11 @@
 from typing import Tuple, List, Union, Dict, cast, Optional
 
 import torch
-import kornia
 
 from kornia.constants import Resample, BorderType, pi
-from kornia.enhance.adjust import equalize3d
+from kornia.enhance.adjust import (
+    equalize3d
+)
 from kornia.geometry.transform.affwarp import (
     _compute_rotation_matrix3d, _compute_tensor_center3d
 )
@@ -177,6 +178,21 @@ def apply_dflip3d(input: torch.Tensor) -> torch.Tensor:
     _validate_input_dtype(input, accepted_dtypes=[torch.float16, torch.float32, torch.float64])
 
     return torch.flip(input, [-3])
+
+
+def compute_intensity_transformation3d(input: torch.Tensor):
+    r"""Compute the applied transformation matrix :math: `(*, 4, 4)`.
+
+    Args:
+        input (torch.Tensor): Tensor to be transformed with shape (H, W), (C, H, W), (B, C, H, W).
+
+    Returns:
+        torch.Tensor: The applied transformation matrix :math: `(*, 4, 4)`. Returns identity transformations.
+    """
+    input = _transform_input3d(input)
+    _validate_input_dtype(input, accepted_dtypes=[torch.float16, torch.float32, torch.float64])
+    identity: torch.Tensor = torch.eye(4, device=input.device, dtype=input.dtype).repeat(input.shape[0], 1, 1)
+    return identity
 
 
 def compute_dflip_transformation3d(input: torch.Tensor) -> torch.Tensor:
@@ -357,25 +373,4 @@ def apply_equalize3d(input: torch.Tensor, params: Dict[str, torch.Tensor]) -> to
     input = _transform_input3d(input)
     _validate_input_dtype(input, accepted_dtypes=[torch.float16, torch.float32, torch.float64])
 
-    res = []
-    for image, prob in zip(input, params['batch_prob']):
-        res.append(equalize3d(image) if prob else _transform_input3d(image))
-    return torch.cat(res, dim=0)
-
-
-def compute_intensity_transformation3d(input: torch.Tensor, params: Dict[str, torch.Tensor]) -> torch.Tensor:
-    r"""Compute the applied transformation matrix :math: `(*, 4, 4)`.
-
-    Args:
-        input (torch.Tensor): Tensor to be transformed with shape :math:`(D, H, W)`, :math:`(C, D, H, W)`,
-            :math:`(*, C, D, H, W)`.
-        params (Dict[str, torch.Tensor]):
-            - params['batch_prob']: A boolean tensor that indicating whether if to transform an image in a batch.
-
-    Returns:
-        torch.Tensor: The applied transformation matrix :math: `(*, 4, 4)` Returns identity transformations.
-    """
-    input = _transform_input3d(input)
-    _validate_input_dtype(input, accepted_dtypes=[torch.float16, torch.float32, torch.float64])
-    identity: torch.Tensor = kornia.eye_like(4, input)
-    return identity
+    return equalize3d(input)

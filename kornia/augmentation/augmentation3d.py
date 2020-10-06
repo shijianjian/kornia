@@ -312,19 +312,19 @@ class RandomRotation3D(AugmentationBase3D):
     Examples:
         >>> rng = torch.manual_seed(0)
         >>> input = torch.rand(1, 1, 3, 3, 3)
-        >>> aug = RandomRotation3D((15., 20., 20.), p=1.0, return_transform=True)
+        >>> aug = RandomRotation3D((15., 20., 20.), p=1.0, return_transform=True, align_corners=True)
         >>> aug(input)
-        (tensor([[[[[0.4963, 0.5013, 0.2314],
-                   [0.1015, 0.3624, 0.4779],
-                   [0.2669, 0.5749, 0.4081]],
+        (tensor([[[[[0.3819, 0.4886, 0.2111],
+                   [0.1196, 0.3833, 0.4722],
+                   [0.3432, 0.5951, 0.4223]],
         <BLANKLINE>
-                  [[0.4426, 0.4198, 0.2713],
-                   [0.2911, 0.1689, 0.4538],
-                   [0.3939, 0.6022, 0.6166]],
+                  [[0.5553, 0.4374, 0.2780],
+                   [0.2423, 0.1689, 0.4009],
+                   [0.4516, 0.6376, 0.7327]],
         <BLANKLINE>
-                  [[0.1496, 0.3740, 0.3151],
-                   [0.4169, 0.4803, 0.5804],
-                   [0.3856, 0.4253, 0.9527]]]]]), tensor([[[ 0.9722,  0.1131, -0.2049,  0.1196],
+                  [[0.1605, 0.3112, 0.3673],
+                   [0.4931, 0.4620, 0.5700],
+                   [0.3505, 0.4685, 0.8092]]]]]), tensor([[[ 0.9722,  0.1131, -0.2049,  0.1196],
                  [-0.0603,  0.9669,  0.2478, -0.1545],
                  [ 0.2262, -0.2286,  0.9469,  0.0556],
                  [ 0.0000,  0.0000,  0.0000,  1.0000]]]))
@@ -362,23 +362,40 @@ class RandomRotation3D(AugmentationBase3D):
         return F.compute_rotate_tranformation3d(input, params)
 
     def apply_transform(self, input: torch.Tensor, params: Dict[str, torch.Tensor]) -> torch.Tensor:
-        return F.apply_rotation3d(input, params)
+        return F.apply_rotation3d(input, params, self.flags)
 
 
 class RandomEqualize3D(AugmentationBase3D):
     r"""Random 3D equalization of a volumetric image.
 
     Args:
-        p (float): probability of the image being equalized. Default value is 0.5
+        p (float): probability of the image being equalized. Default value is 0.5.
 
         return_transform (bool): if ``True`` return the matrix describing the transformation applied to each
                                       input tensor. If ``False`` and the input is a tuple the applied transformation
-                                      wont be concatenated
-        same_on_batch (bool): apply the same transformation across the batch. Default: False
+                                      wont be concatenated.
+        same_on_batch (bool): apply the same transformation across the batch. Default: False.
+
+    Examples:
+        >>> rng = torch.manual_seed(0)
+        >>> input = torch.rand(1, 1, 3, 3, 3)
+        >>> aug = RandomEqualize3D(p=1.0)
+        >>> aug(input)
+        tensor([[[[[0.4963, 0.7682, 0.0885],
+                   [0.1320, 0.3074, 0.6341],
+                   [0.4901, 0.8964, 0.4556]],
+        <BLANKLINE>
+                  [[0.6323, 0.3489, 0.4017],
+                   [0.0223, 0.1689, 0.2939],
+                   [0.5185, 0.6977, 0.8000]],
+        <BLANKLINE>
+                  [[0.1610, 0.2823, 0.6816],
+                   [0.9152, 0.3971, 0.8742],
+                   [0.4194, 0.5529, 0.9527]]]]])
     """
 
     def __init__(self, p: float = 0.5, return_transform: bool = False, same_on_batch: bool = False) -> None:
-        super(RandomEqualize3D, self).__init__(return_transform)
+        super(RandomEqualize3D, self).__init__(p=p, return_transform=return_transform, same_on_batch=same_on_batch)
         self.p: float = p
         self.same_on_batch = same_on_batch
 
@@ -390,7 +407,7 @@ class RandomEqualize3D(AugmentationBase3D):
         return dict()
 
     def compute_transformation(self, input: torch.Tensor, params: Dict[str, torch.Tensor]) -> torch.Tensor:
-        return F.compute_intensity_transformation3d(input, params)
+        return F.compute_intensity_transformation3d(input)
 
     def apply_transform(self, input: torch.Tensor, params: Dict[str, torch.Tensor]) -> torch.Tensor:
         return F.apply_equalize3d(input, params)
