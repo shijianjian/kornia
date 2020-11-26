@@ -1,3 +1,5 @@
+import warnings
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -217,8 +219,22 @@ def angle_axis_to_rotation_matrix(angle_axis: torch.Tensor) -> torch.Tensor:
     # stolen from ceres/rotation.h
 
     _angle_axis = torch.unsqueeze(angle_axis, dim=1)
+
+    is_float16: bool = _angle_axis.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        _angle_axis = _angle_axis.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.matmul`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     theta2 = torch.matmul(_angle_axis, _angle_axis.transpose(1, 2))
     theta2 = torch.squeeze(theta2, dim=1)
+
+    if is_float16:
+        theta2 = theta2.to(torch.float16)
 
     # compute rotation matrices
     rotation_matrix_normal = _compute_rotation_matrix(angle_axis, theta2)

@@ -1,6 +1,8 @@
 """Module to perform projective transformations to tensors."""
 from typing import Tuple, List
 
+import warnings
+
 import torch
 import kornia as K
 from kornia.geometry.conversions import convert_affinematrix_to_homography3d
@@ -55,8 +57,22 @@ def warp_affine3d(src: torch.Tensor,
     dst_norm_trans_src_norm: torch.Tensor = normalize_homography3d(
         M_4x4, size_src, size_out)    # Bx4x4
 
+    is_float16: bool = dst_norm_trans_src_norm.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        dst_norm_trans_src_norm = dst_norm_trans_src_norm.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.inverse`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     src_norm_trans_dst_norm = torch.inverse(dst_norm_trans_src_norm)
     P_norm: torch.Tensor = src_norm_trans_dst_norm[:, :3]  # Bx3x4
+
+    if is_float16:
+        P_norm = P_norm.to(torch.float16)
+        src_norm_trans_dst_norm = src_norm_trans_dst_norm.to(torch.float16)
 
     # compute meshgrid and apply to input
     dsize_out: List[int] = [B, C] + list(size_out)
@@ -122,6 +138,16 @@ def get_projective_transform(center: torch.Tensor, angles: torch.Tensor, scales:
     from_origin_mat = torch.eye(4)[None].repeat(rmat.shape[0], 1, 1).type_as(center)  # Bx4x4
     from_origin_mat[..., :3, -1] += center
 
+    is_float16: bool = from_origin_mat.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        from_origin_mat = from_origin_mat.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.inverse`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     to_origin_mat = from_origin_mat.clone()
     to_origin_mat = from_origin_mat.inverse()
 
@@ -131,6 +157,9 @@ def get_projective_transform(center: torch.Tensor, angles: torch.Tensor, scales:
     # chain 4x4 transforms
     proj_mat = convert_affinematrix_to_homography3d(proj_mat)  # Bx4x4
     proj_mat = (from_origin_mat @ proj_mat @ to_origin_mat)
+
+    if is_float16:
+        proj_mat = proj_mat.to(torch.float16)
 
     return proj_mat[..., :3, :]  # Bx3x4
 
@@ -251,8 +280,23 @@ def get_perspective_transform3d(src: torch.Tensor, dst: torch.Tensor) -> torch.T
         dst[:, 7:8, 0], dst[:, 7:8, 1], dst[:, 7:8, 2],
     ], dim=1)
 
+    is_float16: bool = A.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        b = b.to(tmp_dtype)
+        A = A.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.solve`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     # solve the system Ax = b
     X, LU = torch.solve(b, A)
+
+    if is_float16:
+        X = X.to(torch.float16)
+        LU = LU.to(torch.float16)
 
     # create variable to return
     batch_size = src.shape[0]
@@ -344,6 +388,20 @@ def transform_warp_impl3d(src: torch.Tensor, dst_pix_trans_src_pix: torch.Tensor
     dst_norm_trans_src_norm: torch.Tensor = normalize_homography3d(
         dst_pix_trans_src_pix, dsize_src, dsize_dst)
 
+    is_float16: bool = dst_norm_trans_src_norm.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        dst_norm_trans_src_norm = dst_norm_trans_src_norm.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.inverse`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     src_norm_trans_dst_norm = torch.inverse(dst_norm_trans_src_norm)
+
+    if is_float16:
+        src_norm_trans_dst_norm = src_norm_trans_dst_norm.to(torch.float16)
+
     return homography_warp3d(src, src_norm_trans_dst_norm, dsize_dst, grid_mode, padding_mode,
                              align_corners, True)

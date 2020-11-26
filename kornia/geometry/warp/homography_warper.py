@@ -1,5 +1,7 @@
 from typing import Tuple, Optional
 
+import warnings
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -347,14 +349,30 @@ def normalize_homography(dst_pix_trans_src_pix: torch.Tensor,
     # compute the transformation pixel/norm for src/dst
     src_norm_trans_src_pix: torch.Tensor = normal_transform_pixel(
         src_h, src_w).to(dst_pix_trans_src_pix)
+
+    is_float16: bool = src_norm_trans_src_pix.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        src_norm_trans_src_pix = src_norm_trans_src_pix.to(tmp_dtype)
+        dst_pix_trans_src_pix = dst_pix_trans_src_pix.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.matmul`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     src_pix_trans_src_norm = torch.inverse(src_norm_trans_src_pix)
     dst_norm_trans_dst_pix: torch.Tensor = normal_transform_pixel(
-        dst_h, dst_w).to(dst_pix_trans_src_pix)
+        dst_h, dst_w).to(src_pix_trans_src_norm)
 
     # compute chain transformations
     dst_norm_trans_src_norm: torch.Tensor = (
         dst_norm_trans_dst_pix @ (dst_pix_trans_src_pix @ src_pix_trans_src_norm)
     )
+
+    if is_float16:
+        dst_norm_trans_src_norm = dst_norm_trans_src_norm.to(torch.float16)
+
     return dst_norm_trans_src_norm
 
 
@@ -386,11 +404,27 @@ def normalize_homography3d(dst_pix_trans_src_pix: torch.Tensor,
     # compute the transformation pixel/norm for src/dst
     src_norm_trans_src_pix: torch.Tensor = normal_transform_pixel3d(
         src_d, src_h, src_w).to(dst_pix_trans_src_pix)
+
+    is_float16: bool = src_norm_trans_src_pix.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        src_norm_trans_src_pix = src_norm_trans_src_pix.to(tmp_dtype)
+        dst_pix_trans_src_pix = dst_pix_trans_src_pix.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.matmul`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     src_pix_trans_src_norm = torch.inverse(src_norm_trans_src_pix)
     dst_norm_trans_dst_pix: torch.Tensor = normal_transform_pixel3d(
-        dst_d, dst_h, dst_w).to(dst_pix_trans_src_pix)
+        dst_d, dst_h, dst_w).to(src_pix_trans_src_norm)
     # compute chain transformations
     dst_norm_trans_src_norm: torch.Tensor = (
         dst_norm_trans_dst_pix @ (dst_pix_trans_src_pix @ src_pix_trans_src_norm)
     )
+
+    if is_float16:
+        dst_norm_trans_src_norm = dst_norm_trans_src_norm.to(torch.float16)
+
     return dst_norm_trans_src_norm

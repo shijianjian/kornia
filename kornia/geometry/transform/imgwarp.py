@@ -1,5 +1,7 @@
 from typing import Tuple, Optional
 
+import warnings
+
 import torch
 import torch.nn.functional as F
 
@@ -38,7 +40,21 @@ def transform_warp_impl(src: torch.Tensor, dst_pix_trans_src_pix: torch.Tensor,
     dst_norm_trans_src_norm: torch.Tensor = normalize_homography(
         dst_pix_trans_src_pix, dsize_src, dsize_dst)
 
+    is_float16: bool = dst_norm_trans_src_norm.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        dst_norm_trans_src_norm = dst_norm_trans_src_norm.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.inverse`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     src_norm_trans_dst_norm = torch.inverse(dst_norm_trans_src_norm)
+
+    if is_float16:
+        src_norm_trans_dst_norm = src_norm_trans_dst_norm.to(torch.float16)
+
     return homography_warp(src, src_norm_trans_dst_norm, dsize_dst, grid_mode, padding_mode,
                            align_corners, True)
 
@@ -142,7 +158,22 @@ def warp_affine(src: torch.Tensor, M: torch.Tensor,
     M_3x3: torch.Tensor = convert_affinematrix_to_homography(M)
     dst_norm_trans_src_norm: torch.Tensor = normalize_homography(
         M_3x3, dsize_src, out_size)
+
+    is_float16: bool = dst_norm_trans_src_norm.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        dst_norm_trans_src_norm = dst_norm_trans_src_norm.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.inverse`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     src_norm_trans_dst_norm = torch.inverse(dst_norm_trans_src_norm)
+
+    if is_float16:
+        src_norm_trans_dst_norm = src_norm_trans_dst_norm.to(torch.float16)
+
     grid = F.affine_grid(src_norm_trans_dst_norm[:, :2, :],
                          [B, C, out_size[0], out_size[1]],
                          align_corners=align_corners)
@@ -225,8 +256,23 @@ def get_perspective_transform(src, dst):
         dst[:, 3:4, 0], dst[:, 3:4, 1],
     ], dim=1)
 
+    is_float16: bool = A.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        b = b.to(tmp_dtype)
+        A = A.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.solve`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     # solve the system Ax = b
     X, LU = torch.solve(b, A)
+
+    if is_float16:
+        X = X.to(torch.float16)
+        LU = LU.to(torch.float16)
 
     # create variable to return
     batch_size = src.shape[0]
@@ -455,7 +501,22 @@ def invert_affine_transform(matrix: torch.Tensor) -> torch.Tensor:
         raise ValueError("Input matrix must be a Bx2x3 tensor. Got {}"
                          .format(matrix.shape))
     matrix_tmp: torch.Tensor = convert_affinematrix_to_homography(matrix)
+
+    is_float16: bool = matrix_tmp.dtype == torch.float16
+
+    if is_float16:
+        # torch.get_default_dtype() is not supported by TorchScript
+        # tmp_dtype = torch.float32 if torch.get_default_dtype() == torch.float16 else torch.get_default_dtype()
+        tmp_dtype = torch.float32
+        matrix_tmp = matrix_tmp.to(tmp_dtype)
+        warnings.warn("dtype float16 is not supported by `torch.inverse`."
+                      f"By default, it will be converted into {tmp_dtype}")
+
     matrix_inv: torch.Tensor = torch.inverse(matrix_tmp)
+
+    if is_float16:
+        matrix_inv = matrix_inv.to(torch.float16)
+
     return matrix_inv[..., :2, :3]
 
 
