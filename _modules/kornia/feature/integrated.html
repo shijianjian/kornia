@@ -1,0 +1,777 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
+        <link rel="canonical" href="https://kornia.readthedocs.io/_modules/kornia/feature/integrated.html" />
+
+    <link rel="shortcut icon" href="../../../_static/kornia_logo_favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2023.03.27 -->
+        <title>kornia.feature.integrated - Kornia</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/main.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f0f0f0;
+  --color-code-foreground: black;
+  --color-sidebar-background: #3980F5;
+  --color-sidebar-background-border: #3980F5;
+  --color-sidebar-caption-text: white;
+  --color-sidebar-link-text--top-level: white;
+  --color-sidebar-link-text: white;
+  --sidebar-caption-font-size: normal;
+  --color-sidebar-item-background--hover:  #5dade2;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-sidebar-background: #1a1c1e;
+  --color-sidebar-background-border: #1a1c1e;
+  --color-sidebar-caption-text: white;
+  --color-sidebar-link-text--top-level: white;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-sidebar-background: #1a1c1e;
+  --color-sidebar-background-border: #1a1c1e;
+  --color-sidebar-caption-text: white;
+  --color-sidebar-link-text--top-level: white;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">Kornia</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../../_static/img/kornia_logo_only_light.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../../_static/img/kornia_logo_only_dark.svg" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">GET STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/introduction.html">What is Kornia ?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/highlights.html">Highlighted Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/about.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://kornia-tutorials.readthedocs.io/en/latest/">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../get-started/training.html">Training API (experimental)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.luxonis.com/en/latest/pages/tutorials/creating-custom-nn-models/#kornia">OpenCV AI Kit</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">KORNIA APPLICATIONS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/intro.html">Computer Vision Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/face_detection.html">Face Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/image_augmentations.html">Image Augmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/image_classification.html">Image Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/image_matching.html">Image Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/image_stitching.html">Image Stitching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/image_registration.html">Image Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/semantic_segmentation.html">Semantic segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../applications/image_denoising.html">Image Denoising</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/vit_mobile.html">MobileViT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/loftr.html">LoFTR (matching)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/defmo.html">DeFMO (video)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/hardnet.html">Hardnet (descriptor)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/affnet.html">Affnet (detection)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/sold2.html">SOLD2 (Line detection and matching)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/dexined.html">Dexined (edge detection)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../augmentation.html">kornia.augmentation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../augmentation.auto.html">Automatic Augmentation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../augmentation.base.html">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../augmentation.container.html">Augmentation Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../augmentation.module.html">Image Augmentations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../color.html">kornia.color</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contrib.html">kornia.contrib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../enhance.html">kornia.enhance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../feature.html">kornia.feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filters.html">kornia.filters</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../geometry.html">kornia.geometry</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.bbox.html">kornia.geometry.bbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.boxes.html">kornia.geometry.boxes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.calibration.html">kornia.geometry.calibration</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../geometry.camera.html">kornia.geometry.camera</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../geometry.camera.pinhole.html">Pinhole Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../geometry.camera.perspective.html">Perspective Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../geometry.camera.stereo.html">Stereo Camera</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.conversions.html">kornia.geometry.conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.depth.html">kornia.geometry.depth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.epipolar.html">kornia.geometry.epipolar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.homography.html">kornia.geometry.homography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.liegroup.html">kornia.geometry.liegroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.linalg.html">kornia.geometry.linalg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.line.html">kornia.geometry.line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.quaternion.html">kornia.geometry.quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.subpix.html">kornia.geometry.subpix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.transform.html">kornia.geometry.transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.ransac.html">kornia.geometry.ransac</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io.html">kornia.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../losses.html">kornia.losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">kornia.metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../morphology.html">kornia.morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tracking.html">kornia.tracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing.html">kornia.testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">kornia.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../x.html">kornia.x</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SUPPORT</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/kornia/kornia/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://join.slack.com/t/kornia/shared_invite/zt-csobk21g-2AQRi~X9Uu6PLMuUZdvfjA">Slack community</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://librecv.org">LibreCV community</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://twitter.com/kornia_foss">Twitter @kornia_foss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/chinese.html">Kornia 社区</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.youtube.com/channel/UCI1SE1Ij2Fast5BSKxoa7Ag">Kornia Youtube</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.linkedin.com/company/kornia/">Kornia LinkedIn</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://kornia.org">Kornia AI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">COMMUNITY</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/contribute.html">Contribute to Kornia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/faqs.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/governance.html">Kornia Governance | Persons of interest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/bibliography.html">Bibliography</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for kornia.feature.integrated</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">from</span> <span class="nn">kornia.color</span> <span class="kn">import</span> <span class="n">rgb_to_grayscale</span>
+<span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Device</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">concatenate</span>
+<span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK_LAF</span>
+<span class="kn">from</span> <span class="nn">kornia.geometry.subpix</span> <span class="kn">import</span> <span class="n">ConvQuadInterp3d</span>
+<span class="kn">from</span> <span class="nn">kornia.geometry.transform</span> <span class="kn">import</span> <span class="n">ScalePyramid</span>
+
+<span class="kn">from</span> <span class="nn">.affine_shape</span> <span class="kn">import</span> <span class="n">LAFAffNetShapeEstimator</span>
+<span class="kn">from</span> <span class="nn">.hardnet</span> <span class="kn">import</span> <span class="n">HardNet</span>
+<span class="kn">from</span> <span class="nn">.keynet</span> <span class="kn">import</span> <span class="n">KeyNetDetector</span>
+<span class="kn">from</span> <span class="nn">.laf</span> <span class="kn">import</span> <span class="n">extract_patches_from_pyramid</span><span class="p">,</span> <span class="n">get_laf_center</span><span class="p">,</span> <span class="n">scale_laf</span>
+<span class="kn">from</span> <span class="nn">.orientation</span> <span class="kn">import</span> <span class="n">LAFOrienter</span><span class="p">,</span> <span class="n">OriNet</span><span class="p">,</span> <span class="n">PassLAF</span>
+<span class="kn">from</span> <span class="nn">.responses</span> <span class="kn">import</span> <span class="n">BlobDoG</span><span class="p">,</span> <span class="n">BlobDoGSingle</span><span class="p">,</span> <span class="n">BlobHessian</span><span class="p">,</span> <span class="n">CornerGFTT</span>
+<span class="kn">from</span> <span class="nn">.scale_space_detector</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Detector_config</span><span class="p">,</span>
+    <span class="n">MultiResolutionDetector</span><span class="p">,</span>
+    <span class="n">ScaleSpaceDetector</span><span class="p">,</span>
+    <span class="n">get_default_detector_config</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.siftdesc</span> <span class="kn">import</span> <span class="n">SIFTDescriptor</span>
+
+
+<div class="viewcode-block" id="get_laf_descriptors"><a class="viewcode-back" href="../../../feature.html#kornia.feature.get_laf_descriptors">[docs]</a><span class="k">def</span> <span class="nf">get_laf_descriptors</span><span class="p">(</span>
+    <span class="n">img</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">lafs</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">patch_descriptor</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">grayscale_descriptor</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function to get local descriptors, corresponding to LAFs (keypoints).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        img: image features with shape :math:`(B,C,H,W)`.</span>
+<span class="sd">        lafs: local affine frames :math:`(B,N,2,3)`.</span>
+<span class="sd">        patch_descriptor: patch descriptor module, e.g. :class:`~kornia.feature.SIFTDescriptor`</span>
+<span class="sd">            or :class:`~kornia.feature.HardNet`.</span>
+<span class="sd">        patch_size: patch size in pixels, which descriptor expects.</span>
+<span class="sd">        grayscale_descriptor: True if ``patch_descriptor`` expects single-channel image.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Local descriptors of shape :math:`(B,N,D)` where :math:`D` is descriptor size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">KORNIA_CHECK_LAF</span><span class="p">(</span><span class="n">lafs</span><span class="p">)</span>
+    <span class="n">patch_descriptor</span> <span class="o">=</span> <span class="n">patch_descriptor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">patch_descriptor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="n">timg</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">img</span>
+    <span class="k">if</span> <span class="n">lafs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LAF contains no keypoints </span><span class="si">{</span><span class="n">lafs</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, returning empty tensor&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">lafs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lafs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">128</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">grayscale_descriptor</span> <span class="ow">and</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">timg</span> <span class="o">=</span> <span class="n">rgb_to_grayscale</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+    <span class="n">patches</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">extract_patches_from_pyramid</span><span class="p">(</span><span class="n">timg</span><span class="p">,</span> <span class="n">lafs</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">)</span>
+    <span class="c1"># Descriptor accepts standard tensor [B, CH, H, W], while patches are [B, N, CH, H, W] shape</span>
+    <span class="c1"># So we need to reshape a bit :)</span>
+    <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">CH</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">patch_descriptor</span><span class="p">(</span><span class="n">patches</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span> <span class="o">*</span> <span class="n">N</span><span class="p">,</span> <span class="n">CH</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">))</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LAFDescriptor"><a class="viewcode-back" href="../../../feature.html#kornia.feature.LAFDescriptor">[docs]</a><span class="k">class</span> <span class="nc">LAFDescriptor</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Module to get local descriptors, corresponding to LAFs (keypoints).</span>
+
+<span class="sd">    Internally uses :func:`~kornia.feature.get_laf_descriptors`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        patch_descriptor_module: patch descriptor module, e.g. :class:`~kornia.feature.SIFTDescriptor`</span>
+<span class="sd">            or :class:`~kornia.feature.HardNet`. Default: :class:`~kornia.feature.HardNet`.</span>
+<span class="sd">        patch_size: patch size in pixels, which descriptor expects.</span>
+<span class="sd">        grayscale_descriptor: ``True`` if patch_descriptor expects single-channel image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">patch_descriptor_module</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Module</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">grayscale_descriptor</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">patch_descriptor_module</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">patch_descriptor_module</span> <span class="o">=</span> <span class="n">HardNet</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span> <span class="o">=</span> <span class="n">patch_descriptor_module</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span> <span class="o">=</span> <span class="n">patch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grayscale_descriptor</span> <span class="o">=</span> <span class="n">grayscale_descriptor</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;(descriptor=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;patch_size=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;grayscale_descriptor=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grayscale_descriptor</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="LAFDescriptor.forward"><a class="viewcode-back" href="../../../feature.html#kornia.feature.LAFDescriptor.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">lafs</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Three stage local feature detection.</span>
+
+<span class="sd">        First the location and scale of interest points are determined by</span>
+<span class="sd">        detect function. Then affine shape and orientation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            img: image features with shape :math:`(B,C,H,W)`.</span>
+<span class="sd">            lafs: local affine frames :math:`(B,N,2,3)`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Local descriptors of shape :math:`(B,N,D)` where :math:`D` is descriptor size.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_laf_descriptors</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lafs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grayscale_descriptor</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LocalFeature"><a class="viewcode-back" href="../../../feature.html#kornia.feature.LocalFeature">[docs]</a><span class="k">class</span> <span class="nc">LocalFeature</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Module, which combines local feature detector and descriptor.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        detector: the detection module.</span>
+<span class="sd">        descriptor: the descriptor module.</span>
+<span class="sd">        scaling_coef: multiplier for change default detector scale (e.g. it is too small for KeyNet by default)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">detector</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">:</span> <span class="n">LAFDescriptor</span><span class="p">,</span> <span class="n">scaling_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="n">detector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span> <span class="o">=</span> <span class="n">descriptor</span>
+        <span class="k">if</span> <span class="n">scaling_coef</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scaling coef should be &gt;= 0, got </span><span class="si">{</span><span class="n">scaling_coef</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scaling_coef</span> <span class="o">=</span> <span class="n">scaling_coef</span>
+
+<div class="viewcode-block" id="LocalFeature.forward"><a class="viewcode-back" href="../../../feature.html#kornia.feature.LocalFeature.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            img: image to extract features with shape :math:`(B,C,H,W)`.</span>
+<span class="sd">            mask: a mask with weights where to apply the response function.</span>
+<span class="sd">                The shape must be the same as the input image.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - Detected local affine frames with shape :math:`(B,N,2,3)`.</span>
+<span class="sd">            - Response function values for corresponding lafs with shape :math:`(B,N,1)`.</span>
+<span class="sd">            - Local descriptors of shape :math:`(B,N,D)` where :math:`D` is descriptor size.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lafs</span><span class="p">,</span> <span class="n">responses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+        <span class="n">lafs</span> <span class="o">=</span> <span class="n">scale_laf</span><span class="p">(</span><span class="n">lafs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling_coef</span><span class="p">)</span>
+        <span class="n">descs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lafs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">lafs</span><span class="p">,</span> <span class="n">responses</span><span class="p">,</span> <span class="n">descs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SIFTFeature"><a class="viewcode-back" href="../../../feature.html#kornia.feature.SIFTFeature">[docs]</a><span class="k">class</span> <span class="nc">SIFTFeature</span><span class="p">(</span><span class="n">LocalFeature</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience module, which implements DoG detector + (Root)SIFT descriptor.</span>
+
+<span class="sd">    Using `kornia.feature.MultiResolutionDetector` without blur pyramid Still not as good as OpenCV/VLFeat because of</span>
+<span class="sd">    https://github.com/kornia/kornia/pull/884, but we are working on it</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8000</span><span class="p">,</span>
+        <span class="n">upright</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">rootsift</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">Device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Detector_config</span> <span class="o">=</span> <span class="n">get_default_detector_config</span><span class="p">(),</span>
+    <span class="p">):</span>
+        <span class="n">patch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">41</span>
+        <span class="n">detector</span> <span class="o">=</span> <span class="n">MultiResolutionDetector</span><span class="p">(</span>
+            <span class="n">BlobDoGSingle</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span>
+            <span class="n">num_features</span><span class="p">,</span>
+            <span class="n">config</span><span class="p">,</span>
+            <span class="n">ori_module</span><span class="o">=</span><span class="n">PassLAF</span><span class="p">()</span> <span class="k">if</span> <span class="n">upright</span> <span class="k">else</span> <span class="n">LAFOrienter</span><span class="p">(</span><span class="mi">19</span><span class="p">),</span>
+            <span class="n">aff_module</span><span class="o">=</span><span class="n">PassLAF</span><span class="p">(),</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">descriptor</span> <span class="o">=</span> <span class="n">LAFDescriptor</span><span class="p">(</span>
+            <span class="n">SIFTDescriptor</span><span class="p">(</span><span class="n">patch_size</span><span class="o">=</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">rootsift</span><span class="o">=</span><span class="n">rootsift</span><span class="p">),</span> <span class="n">patch_size</span><span class="o">=</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">grayscale_descriptor</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SIFTFeatureScaleSpace"><a class="viewcode-back" href="../../../feature.html#kornia.feature.SIFTFeatureScaleSpace">[docs]</a><span class="k">class</span> <span class="nc">SIFTFeatureScaleSpace</span><span class="p">(</span><span class="n">LocalFeature</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience module, which implements DoG detector + (Root)SIFT descriptor. Using</span>
+<span class="sd">    `kornia.feature.ScaleSpaceDetector` with blur pyramid.</span>
+
+<span class="sd">    Still not as good as OpenCV/VLFeat because of https://github.com/kornia/kornia/pull/884, but we are working on it</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8000</span><span class="p">,</span>
+        <span class="n">upright</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">rootsift</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">Device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span>
+    <span class="p">):</span>
+        <span class="n">patch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">41</span>
+        <span class="n">detector</span> <span class="o">=</span> <span class="n">ScaleSpaceDetector</span><span class="p">(</span>
+            <span class="n">num_features</span><span class="p">,</span>
+            <span class="n">resp_module</span><span class="o">=</span><span class="n">BlobDoG</span><span class="p">(),</span>
+            <span class="n">nms_module</span><span class="o">=</span><span class="n">ConvQuadInterp3d</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+            <span class="n">scale_pyr_module</span><span class="o">=</span><span class="n">ScalePyramid</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">double_image</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">ori_module</span><span class="o">=</span><span class="n">PassLAF</span><span class="p">()</span> <span class="k">if</span> <span class="n">upright</span> <span class="k">else</span> <span class="n">LAFOrienter</span><span class="p">(</span><span class="mi">19</span><span class="p">),</span>
+            <span class="n">scale_space_response</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">minima_are_also_good</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">mr_size</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">descriptor</span> <span class="o">=</span> <span class="n">LAFDescriptor</span><span class="p">(</span>
+            <span class="n">SIFTDescriptor</span><span class="p">(</span><span class="n">patch_size</span><span class="o">=</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">rootsift</span><span class="o">=</span><span class="n">rootsift</span><span class="p">),</span> <span class="n">patch_size</span><span class="o">=</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">grayscale_descriptor</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GFTTAffNetHardNet"><a class="viewcode-back" href="../../../feature.html#kornia.feature.GFTTAffNetHardNet">[docs]</a><span class="k">class</span> <span class="nc">GFTTAffNetHardNet</span><span class="p">(</span><span class="n">LocalFeature</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience module, which implements GFTT detector + AffNet-HardNet descriptor.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8000</span><span class="p">,</span>
+        <span class="n">upright</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">Device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Detector_config</span> <span class="o">=</span> <span class="n">get_default_detector_config</span><span class="p">(),</span>
+    <span class="p">):</span>
+        <span class="n">detector</span> <span class="o">=</span> <span class="n">MultiResolutionDetector</span><span class="p">(</span>
+            <span class="n">CornerGFTT</span><span class="p">(),</span>
+            <span class="n">num_features</span><span class="p">,</span>
+            <span class="n">config</span><span class="p">,</span>
+            <span class="n">ori_module</span><span class="o">=</span><span class="n">PassLAF</span><span class="p">()</span> <span class="k">if</span> <span class="n">upright</span> <span class="k">else</span> <span class="n">LAFOrienter</span><span class="p">(</span><span class="mi">19</span><span class="p">),</span>
+            <span class="n">aff_module</span><span class="o">=</span><span class="n">LAFAffNetShapeEstimator</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">(),</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">descriptor</span> <span class="o">=</span> <span class="n">LAFDescriptor</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">patch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">grayscale_descriptor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">HesAffNetHardNet</span><span class="p">(</span><span class="n">LocalFeature</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience module, which implements GFTT detector + AffNet-HardNet descriptor.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">,</span>
+        <span class="n">upright</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">Device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Detector_config</span> <span class="o">=</span> <span class="n">get_default_detector_config</span><span class="p">(),</span>
+    <span class="p">):</span>
+        <span class="n">detector</span> <span class="o">=</span> <span class="n">MultiResolutionDetector</span><span class="p">(</span>
+            <span class="n">BlobHessian</span><span class="p">(),</span>
+            <span class="n">num_features</span><span class="p">,</span>
+            <span class="n">config</span><span class="p">,</span>
+            <span class="n">ori_module</span><span class="o">=</span><span class="n">PassLAF</span><span class="p">()</span> <span class="k">if</span> <span class="n">upright</span> <span class="k">else</span> <span class="n">LAFOrienter</span><span class="p">(</span><span class="mi">19</span><span class="p">),</span>
+            <span class="n">aff_module</span><span class="o">=</span><span class="n">LAFAffNetShapeEstimator</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">(),</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">descriptor</span> <span class="o">=</span> <span class="n">LAFDescriptor</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">patch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">grayscale_descriptor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="KeyNetHardNet"><a class="viewcode-back" href="../../../feature.html#kornia.feature.KeyNetHardNet">[docs]</a><span class="k">class</span> <span class="nc">KeyNetHardNet</span><span class="p">(</span><span class="n">LocalFeature</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience module, which implements KeyNet detector + HardNet descriptor.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8000</span><span class="p">,</span>
+        <span class="n">upright</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">Device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span>
+        <span class="n">scale_laf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">ori_module</span> <span class="o">=</span> <span class="n">PassLAF</span><span class="p">()</span> <span class="k">if</span> <span class="n">upright</span> <span class="k">else</span> <span class="n">LAFOrienter</span><span class="p">(</span><span class="n">angle_detector</span><span class="o">=</span><span class="n">OriNet</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
+        <span class="n">detector</span> <span class="o">=</span> <span class="n">KeyNetDetector</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_features</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span> <span class="n">ori_module</span><span class="o">=</span><span class="n">ori_module</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">descriptor</span> <span class="o">=</span> <span class="n">LAFDescriptor</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">patch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">grayscale_descriptor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">,</span> <span class="n">scale_laf</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KeyNetAffNetHardNet"><a class="viewcode-back" href="../../../feature.html#kornia.feature.KeyNetAffNetHardNet">[docs]</a><span class="k">class</span> <span class="nc">KeyNetAffNetHardNet</span><span class="p">(</span><span class="n">LocalFeature</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience module, which implements KeyNet detector + AffNet + HardNet descriptor.</span>
+
+<span class="sd">    .. image:: _static/img/keynet_affnet.jpg</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">num_features</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8000</span><span class="p">,</span>
+        <span class="n">upright</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">Device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span>
+        <span class="n">scale_laf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">ori_module</span> <span class="o">=</span> <span class="n">PassLAF</span><span class="p">()</span> <span class="k">if</span> <span class="n">upright</span> <span class="k">else</span> <span class="n">LAFOrienter</span><span class="p">(</span><span class="n">angle_detector</span><span class="o">=</span><span class="n">OriNet</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
+        <span class="n">detector</span> <span class="o">=</span> <span class="n">KeyNetDetector</span><span class="p">(</span>
+            <span class="kc">True</span><span class="p">,</span> <span class="n">num_features</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span> <span class="n">ori_module</span><span class="o">=</span><span class="n">ori_module</span><span class="p">,</span> <span class="n">aff_module</span><span class="o">=</span><span class="n">LAFAffNetShapeEstimator</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">descriptor</span> <span class="o">=</span> <span class="n">LAFDescriptor</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">patch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">grayscale_descriptor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">,</span> <span class="n">scale_laf</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LocalFeatureMatcher"><a class="viewcode-back" href="../../../feature.html#kornia.feature.LocalFeatureMatcher">[docs]</a><span class="k">class</span> <span class="nc">LocalFeatureMatcher</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Module, which finds correspondences between two images based on local features.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        local_feature: Local feature detector. See :class:`~kornia.feature.GFTTAffNetHardNet`.</span>
+<span class="sd">        matcher: Descriptor matcher, see :class:`~kornia.feature.DescriptorMatcher`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dict[str, Tensor]: Dictionary with image correspondences and confidence scores.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; img1 = torch.rand(1, 1, 320, 200)</span>
+<span class="sd">        &gt;&gt;&gt; img2 = torch.rand(1, 1, 128, 128)</span>
+<span class="sd">        &gt;&gt;&gt; input = {&quot;image0&quot;: img1, &quot;image1&quot;: img2}</span>
+<span class="sd">        &gt;&gt;&gt; gftt_hardnet_matcher = LocalFeatureMatcher(</span>
+<span class="sd">        ...     GFTTAffNetHardNet(10), kornia.feature.DescriptorMatcher(&#39;snn&#39;, 0.8)</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; out = gftt_hardnet_matcher(input)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">local_feature</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span> <span class="n">matcher</span><span class="p">:</span> <span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_feature</span> <span class="o">=</span> <span class="n">local_feature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matcher</span> <span class="o">=</span> <span class="n">matcher</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function for feature extraction from simple image.&quot;&quot;&quot;</span>
+        <span class="n">lafs0</span><span class="p">,</span> <span class="n">resps0</span><span class="p">,</span> <span class="n">descs0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_feature</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;lafs&quot;</span><span class="p">:</span> <span class="n">lafs0</span><span class="p">,</span> <span class="s2">&quot;responses&quot;</span><span class="p">:</span> <span class="n">resps0</span><span class="p">,</span> <span class="s2">&quot;descriptors&quot;</span><span class="p">:</span> <span class="n">descs0</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">no_match_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;keypoints0&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+            <span class="s1">&#39;keypoints1&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+            <span class="s1">&#39;lafs0&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+            <span class="s1">&#39;lafs1&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+            <span class="s1">&#39;confidence&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+            <span class="s1">&#39;batch_indexes&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">),</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="LocalFeatureMatcher.forward"><a class="viewcode-back" href="../../../feature.html#kornia.feature.LocalFeatureMatcher.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            data: dictionary containing the input data in the following format:</span>
+
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            image0: left image with shape :math:`(N, 1, H1, W1)`.</span>
+<span class="sd">            image1: right image with shape :math:`(N, 1, H2, W2)`.</span>
+<span class="sd">            mask0 (optional): left image mask. &#39;0&#39; indicates a padded position :math:`(N, H1, W1)`.</span>
+<span class="sd">            mask1 (optional): right image mask. &#39;0&#39; indicates a padded position :math:`(N, H2, W2)`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - ``keypoints0``, matching keypoints from image0 :math:`(NC, 2)`.</span>
+<span class="sd">            - ``keypoints1``, matching keypoints from image1 :math:`(NC, 2)`.</span>
+<span class="sd">            - ``confidence``, confidence score [0, 1] :math:`(NC)`.</span>
+<span class="sd">            - ``lafs0``, matching LAFs from image0 :math:`(1, NC, 2, 3)`.</span>
+<span class="sd">            - ``lafs1``, matching LAFs from image1 :math:`(1, NC, 2, 3)`.</span>
+<span class="sd">            - ``batch_indexes``, batch indexes for the keypoints and lafs :math:`(NC)`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_image_pairs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;image0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;lafs0&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;descriptors0&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="c1"># One can supply pre-extracted local features</span>
+            <span class="n">feats_dict0</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;image0&#39;</span><span class="p">])</span>
+            <span class="n">lafs0</span><span class="p">,</span> <span class="n">descs0</span> <span class="o">=</span> <span class="n">feats_dict0</span><span class="p">[</span><span class="s1">&#39;lafs&#39;</span><span class="p">],</span> <span class="n">feats_dict0</span><span class="p">[</span><span class="s1">&#39;descriptors&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lafs0</span><span class="p">,</span> <span class="n">descs0</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;lafs0&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;descriptors0&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;lafs1&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;descriptors1&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">feats_dict1</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;image1&#39;</span><span class="p">])</span>
+            <span class="n">lafs1</span><span class="p">,</span> <span class="n">descs1</span> <span class="o">=</span> <span class="n">feats_dict1</span><span class="p">[</span><span class="s1">&#39;lafs&#39;</span><span class="p">],</span> <span class="n">feats_dict1</span><span class="p">[</span><span class="s1">&#39;descriptors&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lafs1</span><span class="p">,</span> <span class="n">descs1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;lafs1&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;descriptors1&#39;</span><span class="p">]</span>
+
+        <span class="n">keypoints0</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">get_laf_center</span><span class="p">(</span><span class="n">lafs0</span><span class="p">)</span>
+        <span class="n">keypoints1</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">get_laf_center</span><span class="p">(</span><span class="n">lafs1</span><span class="p">)</span>
+
+        <span class="n">out_keypoints0</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">out_keypoints1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">out_confidence</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">out_batch_indexes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">out_lafs0</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">out_lafs1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">batch_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_image_pairs</span><span class="p">):</span>
+            <span class="n">dists</span><span class="p">,</span> <span class="n">idxs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matcher</span><span class="p">(</span><span class="n">descs0</span><span class="p">[</span><span class="n">batch_idx</span><span class="p">],</span> <span class="n">descs1</span><span class="p">[</span><span class="n">batch_idx</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idxs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">current_keypoints_0</span> <span class="o">=</span> <span class="n">keypoints0</span><span class="p">[</span><span class="n">batch_idx</span><span class="p">,</span> <span class="n">idxs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+            <span class="n">current_keypoints_1</span> <span class="o">=</span> <span class="n">keypoints1</span><span class="p">[</span><span class="n">batch_idx</span><span class="p">,</span> <span class="n">idxs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+            <span class="n">current_lafs_0</span> <span class="o">=</span> <span class="n">lafs0</span><span class="p">[</span><span class="n">batch_idx</span><span class="p">,</span> <span class="n">idxs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+            <span class="n">current_lafs_1</span> <span class="o">=</span> <span class="n">lafs1</span><span class="p">[</span><span class="n">batch_idx</span><span class="p">,</span> <span class="n">idxs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+
+            <span class="n">out_confidence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">dists</span><span class="p">)</span>
+            <span class="n">batch_idxs</span> <span class="o">=</span> <span class="n">batch_idx</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dists</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">keypoints0</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">out_keypoints0</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_keypoints_0</span><span class="p">)</span>
+            <span class="n">out_keypoints1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_keypoints_1</span><span class="p">)</span>
+            <span class="n">out_lafs0</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_lafs_0</span><span class="p">)</span>
+            <span class="n">out_lafs1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_lafs_1</span><span class="p">)</span>
+            <span class="n">out_batch_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">batch_idxs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_batch_indexes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_match_output</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;image0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;image0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;keypoints0&#39;</span><span class="p">:</span> <span class="n">concatenate</span><span class="p">(</span><span class="n">out_keypoints0</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="s1">&#39;keypoints1&#39;</span><span class="p">:</span> <span class="n">concatenate</span><span class="p">(</span><span class="n">out_keypoints1</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="s1">&#39;lafs0&#39;</span><span class="p">:</span> <span class="n">concatenate</span><span class="p">(</span><span class="n">out_lafs0</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s1">&#39;lafs1&#39;</span><span class="p">:</span> <span class="n">concatenate</span><span class="p">(</span><span class="n">out_lafs1</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s1">&#39;confidence&#39;</span><span class="p">:</span> <span class="n">concatenate</span><span class="p">(</span><span class="n">out_confidence</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;batch_indexes&#39;</span><span class="p">:</span> <span class="n">concatenate</span><span class="p">(</span><span class="n">out_batch_indexes</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">}</span></div></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2019, Kornia developers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/scripts/furo.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script src="../../../_static/js/custom.js"></script>
+    
+    <!-- DocsQA integration start -->
+    <script src="https://jina-docqa-ui.netlify.app/dist/qabot.js"></script>
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/3.3.1/gradio.js"></script>
+    <script>
+      // This prevents the global search interfere with qa-bot internal text input.
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('qa-bot').forEach((x) => {
+          x.addEventListener('keydown', (event) => {
+            event.stopPropagation();
+          });
+        });
+      });
+    </script>
+    <qa-bot
+        token="_LX-ltnplMGK5qrT05qV-auHldTT_babktyfuL2Gn8aP9_eDldufuLiA"
+        title="Kornia"
+        description="State-of-the-art and curated Computer Vision algorithms for AI"
+        avatar-src="https://github.com/kornia/data/raw/main/pixie_QAbot.png">
+            <template>
+                <dl>
+                    <dt>You can ask questions about Kornia. Try</dt>
+                    <dd>What is Kornia?</dd>
+                    <dd>How can i find correspondences between two images?</dd>
+                    <dd>How to do image augmentation?</dd>
+                </dl>
+            </template>
+    </qa-bot>
+    <!-- DocsQA integration end -->
+</body>
+</html>
