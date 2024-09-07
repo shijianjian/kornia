@@ -11,3 +11,5 @@ pytest-timeout
 requests
 transformers
 types-requests
+onnx
+onnxruntime
