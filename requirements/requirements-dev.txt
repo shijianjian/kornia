@@ -7,7 +7,7 @@ onnx
 onnxruntime
 pillow
 pre-commit>=2
-pytest==8.3.2
+pytest==8.3.3
 pytest-timeout
 requests
 transformers
